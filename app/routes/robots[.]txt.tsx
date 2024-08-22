@@ -6,7 +6,7 @@ export const loader = () => {
     User-agent: *
     Allow: /
 
-    Sitemap: https://www.kissa-katada.com/sitemap.xml
+    Sitemap: https://www.daimon-tips.com/sitemap.xml
     `
 
   return new Response(robotText, {

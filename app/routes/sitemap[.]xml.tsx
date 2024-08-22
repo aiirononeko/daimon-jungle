@@ -24,7 +24,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   const content = `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
-        <loc>https://www.kissa-katada.com/</loc>
+        <loc>https://www.daimon-tips.com/</loc>
         <lastmod>2024-08-17</lastmod>
         <priority>1.0</priority>
         <changefreq>daily</changefreq>
@@ -32,7 +32,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   ${categories.map((category) => {
     return `
           <url>
-            <loc>https://www.kissa-katada.com/${category.slug}</loc>
+            <loc>https://www.daimon-tips.com/${category.slug}</loc>
             <lastmod>${category.updatedAt}</lastmod>
             <priority>1.0</priority>
             <changefreq>daily</changefreq>
@@ -42,7 +42,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
   ${blogs.map((blog) => {
     return `
       <url>
-        <loc>https://www.kissa-katada.com/${blog.category.slug}/${blog.id}</loc>
+        <loc>https://www.daimon-tips.com/${blog.category.slug}/${blog.id}</loc>
         <lastmod>${blog.updatedAt}</lastmod>
         <priority>1.0</priority>
         <changefreq>daily</changefreq>
