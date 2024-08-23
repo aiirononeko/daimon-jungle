@@ -114,6 +114,7 @@ body {
 #article p a {
   color: #5b7c99;
   text-decoration: underline;
+  word-break: break-all;
 }
 
 #article p code {
