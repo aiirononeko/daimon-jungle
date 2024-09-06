@@ -1,20 +1,22 @@
 import { format } from '@formkit/tempo'
-import { MetaFunction } from '@remix-run/cloudflare'
-import { json, useLoaderData } from '@remix-run/react'
+import { MetaFunction, json } from '@remix-run/cloudflare'
+import { useLoaderData } from '@remix-run/react'
 import { RefreshCcw } from 'lucide-react'
 import { createClient } from 'microcms-js-sdk'
 import { LoaderFunctionArgs } from 'react-router'
 import invariant from 'tiny-invariant'
 import { ContentDetail } from '~/components/content-detail'
 
-export const loader = async ({ params, context }: LoaderFunctionArgs) => {
+export const loader = async ({
+  params,
+  context,
+}: LoaderFunctionArgs) => {
+  invariant(params.categorySlug, 'カテゴリが指定されていません')
   invariant(params.contentId, '記事IDが指定されていません')
 
-  const { env } = context.cloudflare
-
   const client = createClient({
-    serviceDomain: env.MICROCMS_SERVICE_DOMAIN,
-    apiKey: env.MICROCMS_API_KEY,
+    serviceDomain: context.cloudflare.env.MICROCMS_SERVICE_DOMAIN,
+    apiKey: context.cloudflare.env.MICROCMS_API_KEY,
   })
 
   const content = await client.get<Blog>({
@@ -25,8 +27,22 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   return json({ content })
 }
 
-export default function TechnologyContent() {
+export default function Content() {
   const { content } = useLoaderData<typeof loader>()
+
+  const publishedAt = format({
+    date: content.publishedAt,
+    format: 'YYYY/MM/DD',
+    locale: 'ja',
+    tz: 'Asia/Tokyo',
+  })
+
+  const revisedAt = format({
+    date: content.revisedAt,
+    format: 'YYYY/MM/DD',
+    locale: 'ja',
+    tz: 'Asia/Tokyo',
+  })
 
   return (
     <article className='mb-14'>
@@ -37,11 +53,11 @@ export default function TechnologyContent() {
             {content.title}
           </h1>
           <div className='flex justify-center gap-3 text-muted-foreground text-sm'>
-            <div>{format(content.createdAt, 'YYYY/MM/DD')}に公開</div>
+            <div>{publishedAt}に公開</div>
             {content.updatedAt && (
               <div className='flex items-center gap-1'>
                 <RefreshCcw className='size-4' />
-                {format(content.updatedAt, 'YYYY/MM/DD')}
+                {revisedAt}
               </div>
             )}
           </div>
@@ -54,11 +70,12 @@ export default function TechnologyContent() {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return []
-
   const { content } = data
 
   return [
-    { title: `${content.title} | ダイモンTips` },
+    {
+      title: `${content.title} | ダイモンTips`,
+    },
     {
       name: 'description',
       content: content.description,
