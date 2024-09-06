@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-// import avatar from '~/image/katada-avatar.png'
+import avatar from '~/image/daimon-avatar.png'
 import x from '~/image/x-icon.png'
 
 export const Introduce = () => {
@@ -8,15 +8,12 @@ export const Introduce = () => {
     <div className='border rounded p-5 space-y-4'>
       <div className='flex flex-row gap-3'>
         <Avatar>
-          <AvatarImage src={''} alt='ダイモンシュウのアイコン' />
+          <AvatarImage src={avatar} alt='ダイモンシュウのアイコン' />
           <AvatarFallback>DS</AvatarFallback>
         </Avatar>
         <div className='space-y-2'>
           <p className='font-bold tracking-wider'>ダイモン シュウ</p>
           <div className='flex flex-row gap-2 items-baseline'>
-            {/* <Link to='https://github.com/aiirononeko' target='_blank'> */}
-            {/*   <img src={github} width='24px' height='24px' /> */}
-            {/* </Link> */}
             <Link to='https://x.com/donalddshu1' target='_blank'>
               <img src={x} width='20px' height='20px' />
             </Link>
